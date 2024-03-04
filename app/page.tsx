@@ -1,3 +1,9 @@
+import Shortener from "./_components/shortener";
+
 export default function Home() {
-    return <main></main>;
+    return (
+        <main>
+            <Shortener />
+        </main>
+    );
 }
