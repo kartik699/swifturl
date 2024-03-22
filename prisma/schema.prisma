@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model Link {
+  id          String @id @default(uuid())
+  longLink    String
+  shortLink   String @unique
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
