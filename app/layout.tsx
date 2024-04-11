@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 
 import "./globals.css";
 import Navbar from "./_components/navbar";
@@ -22,6 +23,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${inter.className} overflow-y-hidden`}>
                 <Navbar />
+                <Toaster />
                 {children}
                 <Footer />
             </body>
