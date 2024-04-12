@@ -1,8 +1,10 @@
 "use server";
 
-import { db } from "@/lib/db";
-import { CharacterSetType, generateRandomString } from "ts-randomstring/lib";
 import { toast } from "sonner";
+import { CharacterSetType, generateRandomString } from "ts-randomstring/lib";
+
+import { db } from "@/lib/db";
+import { LinkReturnType } from "@/types/types";
 
 /*
 Steps:
@@ -21,7 +23,7 @@ const createUniqueLink = () => {
     return uniqueCode;
 };
 
-export async function createLink(url: string): Promise<string> {
+export async function createLink(url: string): Promise<LinkReturnType> {
     // Step 1
     const code = createUniqueLink();
 
@@ -29,7 +31,7 @@ export async function createLink(url: string): Promise<string> {
     try {
         const checkCode = await db.link.findFirst({
             where: {
-                shortLink: code,
+                longLink: url,
             },
             select: {
                 shortLink: true,
@@ -38,32 +40,21 @@ export async function createLink(url: string): Promise<string> {
         });
 
         // Step 3
-        if (
-            checkCode &&
-            checkCode.shortLink === code &&
-            checkCode.longLink !== url
-        ) {
-            //TODO: Handle this case
-        }
+        if (checkCode && checkCode.longLink === url) {
+            console.log("Link already exists");
+            return { code: checkCode.shortLink };
+        } else {
+            // Step 4
+            const { shortLink } = await db.link.create({
+                data: {
+                    shortLink: code,
+                    longLink: url,
+                },
+            });
 
-        if (
-            checkCode &&
-            checkCode.shortLink === code &&
-            checkCode.longLink === url
-        ) {
-            return code;
+            return { code: shortLink };
         }
-
-        // Step 4
-        await db.link.create({
-            data: {
-                shortLink: code,
-                longLink: url,
-            },
-        });
     } catch (err) {
-        toast.error("Something went wrong! Please try again later.");
+        return { error: "Something went wrong! Please try again later." };
     }
-
-    return code;
 }

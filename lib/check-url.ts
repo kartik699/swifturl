@@ -1,10 +1,12 @@
-// Purpose: Check if a URL is valid. This is a simple function that uses the URL constructor to check if a URL is valid. It returns true if the URL is valid and false if it is not. This function is used in the shortener component to check if the URL entered by the user is valid. If the URL is not valid, the user is shown an error message.
+// Purpose: This functions uses a regular expression to check if the domain name is valid. This function is used in the shortener component to validate the URL entered by the user before shortening it.
 
 export function isValid(url: string): boolean {
-    try {
-        new URL(url);
+    // checks for .com, .org, .net, .io, etc.
+    const regex = new RegExp(/^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}$/i);
+
+    if (regex.test(url)) {
         return true;
-    } catch (err) {
-        return false;
     }
+
+    return false;
 }
