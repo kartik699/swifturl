@@ -1,6 +1,5 @@
 "use server";
 
-import { toast } from "sonner";
 import { CharacterSetType, generateRandomString } from "ts-randomstring/lib";
 
 import { db } from "@/lib/db";
@@ -41,7 +40,6 @@ export async function createLink(url: string): Promise<LinkReturnType> {
 
         // Step 3
         if (checkCode && checkCode.longLink === url) {
-            console.log("Link already exists");
             return { code: checkCode.shortLink };
         } else {
             // Step 4

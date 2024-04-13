@@ -31,10 +31,13 @@ const Shortener = () => {
 
     const handleSubmit = async (formData: FormData) => {
         const url = formData.get("long-url") as string;
+        // TODO: Debug "isValid" function
         const validUrl = isValid(url);
 
         if (validUrl) {
             setIsDone(false);
+            // clear copied text
+            copiedText && copy("");
             setIsValidUrl(true);
 
             const correctedUrl = correctUrl(url);
@@ -88,12 +91,16 @@ const Shortener = () => {
                     <div className="flex ">
                         <Sparkles />
                         Your SwiftURL is:&nbsp;{" "}
-                        <span ref={spanRef} className="font-normal">
+                        <span ref={spanRef} className="font-normal text-wrap">
                             {shortUrl}
                         </span>
                     </div>
                     {isDone && (
-                        <Button onClick={handleCopy} size={"sm"}>
+                        <Button
+                            onClick={handleCopy}
+                            size={"sm"}
+                            className="text-sm"
+                        >
                             {copiedText ? "Copied!" : "Copy to clipboard"}
                         </Button>
                     )}
