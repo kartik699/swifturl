@@ -5,6 +5,7 @@ import { LinkReturnType } from "@/types/types";
 
 export async function redirectTo(code: string): Promise<LinkReturnType> {
     try {
+        // throw new Error("Not implemented");
         // Find the link in the database using the short link code
         const link = await db.link.findFirst({
             where: {

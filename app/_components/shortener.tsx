@@ -27,6 +27,7 @@ const Shortener = () => {
     const handleCopy = async () => {
         const text = spanRef?.current?.textContent!;
         await copy(text);
+        navigator.clipboard.writeText(text);
     };
 
     const handleSubmit = async (formData: FormData) => {
@@ -35,10 +36,10 @@ const Shortener = () => {
         const validUrl = isValid(url);
 
         if (validUrl) {
+            setIsValidUrl(true);
             setIsDone(false);
             // clear copied text
             copiedText && copy("");
-            setIsValidUrl(true);
 
             const correctedUrl = correctUrl(url);
 
