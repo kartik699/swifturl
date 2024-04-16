@@ -5,6 +5,7 @@ import { NextFont } from "next/dist/compiled/@next/font";
 import { Aclonica } from "next/font/google";
 
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const aclonica: NextFont = Aclonica({
     weight: ["400"],
@@ -19,8 +20,20 @@ const Footer = () => {
                 aclonica.className
             )}
         >
-            Made with &nbsp; <Heart className="text-red-500 h-6 w-6 mb-0.5" />{" "}
-            &nbsp; by Kartik
+            Powered by &nbsp;{" "}
+            <Image
+                src={"./next-js.svg"}
+                height={22}
+                width={22}
+                alt="nextjs logo"
+            />{" "}
+            &nbsp; and &nbsp;{" "}
+            <Image
+                src={"./cockroachdb.svg"}
+                height={22}
+                width={22}
+                alt="cockroachdb logo"
+            />
         </div>
     );
 };

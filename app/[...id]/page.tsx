@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
+import { toast } from "sonner";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 
 import { redirectTo } from "@/actions/redirect";
 
@@ -11,10 +12,12 @@ const Redirect = () => {
 
     const linkRef = useRef<HTMLAnchorElement>(null);
 
+    // getting the code from url parameters
     const { id } = useParams<{ id: string }>();
 
     const code = id[0];
 
+    // fetching the link from the server
     const getLink = async (code: string) => {
         const { link, error } = await redirectTo(code);
 
@@ -26,13 +29,16 @@ const Redirect = () => {
         return link;
     };
 
+    // setting the link and redirecting the user
     const setLinkAndRedirect = async () => {
         const url = await getLink(code);
         setLink(url!);
 
+        // the link tag is clicked to redirect the user
         linkRef.current?.click();
     };
 
+    // redirecting as soon as the page loads
     useEffect(() => {
         setLinkAndRedirect();
     }, []);
@@ -40,7 +46,8 @@ const Redirect = () => {
     if (link) {
         return (
             <>
-                <a hidden href={link} ref={linkRef}></a>
+                {/* a hidden link tag for redirecting the user to destination page */}
+                <Link hidden href={link} ref={linkRef} />
             </>
         );
     }
@@ -67,7 +74,6 @@ const Redirect = () => {
                             position: "absolute",
                             translate: "-50%",
                         }}
-                        frameBorder="0"
                         className="giphy-embed size-40"
                         allowFullScreen
                     ></iframe>

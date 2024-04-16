@@ -1,45 +1,44 @@
 "use client";
 
 import { toast } from "sonner";
+import copy from "clipboard-copy";
 import { useFormStatus } from "react-dom";
 import { Link, Sparkles } from "lucide-react";
-import { useCopyToClipboard } from "usehooks-ts";
 import { ElementRef, useRef, useState } from "react";
 
-import { correctUrl } from "@/lib/correct-url";
+import { isValid } from "@/lib/check-url";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { correctUrl } from "@/lib/correct-url";
 import { Button } from "@/components/ui/button";
-import { isValid } from "@/lib/check-url";
 import { createLink } from "@/actions/create-link";
 
 const Shortener = () => {
+    const [isCopied, setIsCopied] = useState(false);
     const [isDone, setIsDone] = useState(false);
     const [isValidUrl, setIsValidUrl] = useState(true);
     const [shortUrl, setShortUrl] = useState("");
 
     const { pending } = useFormStatus();
 
-    const [copiedText, copy] = useCopyToClipboard();
-
     const spanRef = useRef<ElementRef<"span">>(null);
 
     const handleCopy = async () => {
         const text = spanRef?.current?.textContent!;
         await copy(text);
-        navigator.clipboard.writeText(text);
+        setIsCopied(true);
     };
 
     const handleSubmit = async (formData: FormData) => {
         const url = formData.get("long-url") as string;
-        // TODO: Debug "isValid" function
         const validUrl = isValid(url);
 
         if (validUrl) {
             setIsValidUrl(true);
             setIsDone(false);
+            setIsCopied(false);
             // clear copied text
-            copiedText && copy("");
+            isCopied && copy("");
 
             const correctedUrl = correctUrl(url);
 
@@ -89,7 +88,7 @@ const Shortener = () => {
                     </Button>
                 </form>
                 <div className="text-sm font-bold flex flex-col items-center gap-2">
-                    <div className="flex ">
+                    <div className="flex max-sm:text-xs">
                         <Sparkles />
                         Your SwiftURL is:&nbsp;{" "}
                         <span ref={spanRef} className="font-normal text-wrap">
@@ -102,7 +101,7 @@ const Shortener = () => {
                             size={"sm"}
                             className="text-sm"
                         >
-                            {copiedText ? "Copied!" : "Copy to clipboard"}
+                            {isCopied ? "Copied!" : "Copy to clipboard"}
                         </Button>
                     )}
                 </div>
