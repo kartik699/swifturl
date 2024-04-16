@@ -1,6 +1,5 @@
 "use client";
 
-import { Heart } from "lucide-react";
 import { NextFont } from "next/dist/compiled/@next/font";
 import { Aclonica } from "next/font/google";
 
