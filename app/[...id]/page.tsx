@@ -51,7 +51,7 @@ const Redirect = () => {
         return (
             <>
                 {/* a hidden link tag for redirecting the user to destination page */}
-                <a hidden href={"#"} ref={linkRef} />
+                <a hidden href={link} ref={linkRef} />
             </>
         );
     }
