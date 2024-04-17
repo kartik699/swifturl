@@ -18,7 +18,6 @@ const Redirect = () => {
 
     // fetching the link from the server
     const getLink = async (code: string) => {
-        console.log("sending code:", code);
         const { link, error } = await redirectTo(code);
 
         if (error) {
@@ -26,20 +25,16 @@ const Redirect = () => {
             return;
         }
 
-        console.log("link obtained:", link);
         return link;
     };
 
     // setting the link and redirecting the user
     const setLinkAndRedirect = async () => {
         const url = await getLink(code);
-        console.log("url obtained:", url);
         setLink(url!);
 
         // the link tag is clicked to redirect the user
-        console.log("clicking link:", link);
         linkRef.current?.click();
-        console.log("clicked link:", link);
     };
 
     // redirecting as soon as the page loads
