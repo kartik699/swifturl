@@ -1,6 +1,6 @@
 # SwiftURL
 
-SwiftURL is a URL shortener project built using Next.js, TypeScript, Prisma, and CockroachDB. It allows you to shorten long URLs into more manageable and shareable links.
+SwiftURL is a URL shortener project built using Next.js, TypeScript, TailwindCSS, Prisma, and CockroachDB. It allows you to shorten long URLs into more manageable and shareable links.
 
 ![swifturl](https://github.com/kartik699/swifturl/assets/58633671/668791e2-a281-45b1-96e7-fb8207cc9725)
 
