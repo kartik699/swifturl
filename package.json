@@ -10,6 +10,7 @@
         "postinstall": "prisma generate"
     },
     "dependencies": {
+        "micromatch": ">=4.0.8",
         "@prisma/client": "^5.11.0",
         "@radix-ui/react-label": "^2.0.2",
         "@radix-ui/react-slot": "^1.0.2",
@@ -27,6 +28,7 @@
         "ts-randomstring": "^1.0.8"
     },
     "devDependencies": {
+        "micromatch": ">=4.0.8",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
